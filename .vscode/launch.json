@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-ComgabiApplication<comgabi>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "comgb.comgabi.ComgabiApplication",
+            "projectName": "comgabi",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
