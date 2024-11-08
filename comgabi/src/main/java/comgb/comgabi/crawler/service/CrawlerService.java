@@ -1,7 +1,7 @@
-package comgb.comgabi.service;
+package comgb.comgabi.crawler.service;
 
-import comgb.comgabi.model.CrawledData;
-import comgb.comgabi.repository.CrawledDataRepository;
+import comgb.comgabi.crawler.model.CrawledData;
+import comgb.comgabi.crawler.repository.CrawledDataRepository;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;

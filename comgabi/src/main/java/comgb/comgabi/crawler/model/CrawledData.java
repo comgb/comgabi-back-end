@@ -1,4 +1,4 @@
-package comgb.comgabi.model;
+package comgb.comgabi.crawler.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;

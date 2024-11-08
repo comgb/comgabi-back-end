@@ -1,4 +1,4 @@
-package comgb.comgabi.config;
+package comgb.comgabi.crawler.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

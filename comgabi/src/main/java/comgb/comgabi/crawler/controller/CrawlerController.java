@@ -1,8 +1,8 @@
-package comgb.comgabi.controller;
+package comgb.comgabi.crawler.controller;
 
-import comgb.comgabi.model.CrawledData;
-import comgb.comgabi.repository.CrawledDataRepository;
-import comgb.comgabi.service.CrawlerService;
+import comgb.comgabi.crawler.model.CrawledData;
+import comgb.comgabi.crawler.repository.CrawledDataRepository;
+import comgb.comgabi.crawler.service.CrawlerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

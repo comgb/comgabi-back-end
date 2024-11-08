@@ -1,6 +1,6 @@
-package comgb.comgabi.repository;
+package comgb.comgabi.crawler.repository;
 
-import comgb.comgabi.model.CrawledData;
+import comgb.comgabi.crawler.model.CrawledData;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
