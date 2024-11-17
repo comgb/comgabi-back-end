@@ -19,14 +19,6 @@ configurations {
 	}
 }
 
-apply plugin: 'java'
-apply plugin: 'application'
-
-mainClassName = 'ApiExample'
-sourceCompatibility = 1.7
-targetCompatibility = 1.7
-version = '1.0'
-
 repositories {
 	mavenCentral()
 }
