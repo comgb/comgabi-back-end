@@ -1,4 +1,4 @@
-package comgb.comgabi.newsCrawler.config;
+package comgb.comgabi.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

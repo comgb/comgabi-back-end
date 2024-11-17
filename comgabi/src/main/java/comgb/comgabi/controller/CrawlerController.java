@@ -1,4 +1,4 @@
-package comgb.comgabi.newsCrawler.controller;
+package comgb.comgabi.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

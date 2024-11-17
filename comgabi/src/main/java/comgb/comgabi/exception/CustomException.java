@@ -1,4 +1,4 @@
-package comgb.comgabi.newsCrawler.exception;
+package comgb.comgabi.exception;
 
 public class CustomException extends RuntimeException {
     public CustomException(String message) {
