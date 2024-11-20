@@ -10,12 +10,17 @@ import com.rometools.rome.io.XmlReader;
 
 import comgb.comgabi.newsCrawler.model.News;
 import comgb.comgabi.newsCrawler.repository.NewsRepository;
+import jakarta.transaction.Transactional;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
+import java.util.stream.Collectors;
 
 @Service
 public class CrawlerService {
@@ -95,5 +100,40 @@ public class CrawlerService {
             e.printStackTrace();
         }
         return new ArrayList<>();
+    }
+
+    @Transactional
+    public List<News> getAllEntities() {
+        List<News> newsList = newsRepository.findAll();
+        Random random = new Random();
+
+        // 현재 시간에서 3일 전을 계산
+        LocalDateTime threeDaysAgo = LocalDateTime.now().minusDays(3);
+
+        // newsList에서 createdDate가 3일 전 이후인 데이터만 필터링
+        newsList = newsList.stream()
+                .filter(news -> {
+                    if (news.getCreatedDate() != null) {
+                        LocalDateTime createdDateTime = news.getCreatedDate().toInstant()
+                                .atZone(ZoneId.systemDefault())
+                                .toLocalDateTime();
+                        return createdDateTime.isAfter(threeDaysAgo);
+                    }
+                    return false; // createdDate가 null이면 제외
+                })
+                .collect(Collectors.toList());
+        List<News> newNewsList = new ArrayList<>();
+        ArrayList<Integer> excludingList = new ArrayList<>();
+        for(int i = 0; i < 4; i++) {
+            News news = newsList.get(random.nextInt(newsList.size() + 1));
+            if(excludingList.contains(news.getNewsId())) {
+                i -= 1;
+                continue;
+            } else {
+                newNewsList.add(news);
+                excludingList.add(news.getNewsId());
+            }
+        }
+        return newNewsList;
     }
 }
