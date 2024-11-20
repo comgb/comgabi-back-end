@@ -2,9 +2,18 @@ package comgb.comgabi.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-public class ApplicationConfig {
+public class ApplicationConfig implements WebMvcConfigurer {
 
-    // 데이터베이스 연결, 서비스 관련 추가 설정이 필요할 경우 여기서 관리
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/api/**")
+                .allowedOrigins("http://localhost:3000")
+                .allowedMethods("GET", "POST", "PUT", "DELETE")
+                .allowedHeaders("*")
+                .allowCredentials(true);
+    }
 }

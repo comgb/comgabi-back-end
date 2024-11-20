@@ -1,4 +1,4 @@
-package comgb.comgabi.newsCrawler.service;
+package comgb.comgabi.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -103,7 +103,7 @@ public class CrawlerService {
     }
 
     @Transactional
-    public List<News> getAllEntities() {
+    public List<News> getAllEntities(int numberOfData) {
         List<News> newsList = newsRepository.findAll();
         Random random = new Random();
 
@@ -124,7 +124,7 @@ public class CrawlerService {
                 .collect(Collectors.toList());
         List<News> newNewsList = new ArrayList<>();
         ArrayList<Integer> excludingList = new ArrayList<>();
-        for(int i = 0; i < 4; i++) {
+        for(int i = 0; i < numberOfData; i++) {
             News news = newsList.get(random.nextInt(newsList.size() + 1));
             if(excludingList.contains(news.getNewsId())) {
                 i -= 1;
