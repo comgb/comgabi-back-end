@@ -2,6 +2,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "SubcutaneousObject",
+            "request": "launch",
+            "mainClass": "comgb.comgabi.danawa_crawler.SubcutaneousObject",
+            "projectName": "comgabi"
+        },
+        {
+            "type": "java",
+            "name": "ProductURLCrawler",
+            "request": "launch",
+            "mainClass": "comgb.comgabi.danawa_crawler.ProductURLCrawler",
+            "projectName": "comgabi"
+        },
+        {
+            "type": "java",
             "name": "CrawlerService",
             "request": "launch",
             "mainClass": "comgb.comgabi.crawler.service.CrawlerService",
