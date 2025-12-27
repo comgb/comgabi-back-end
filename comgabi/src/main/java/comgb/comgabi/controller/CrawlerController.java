@@ -24,7 +24,7 @@ public class CrawlerController {
     private ProductService productService;
 
     @GetMapping("/api/crawl-news")
-    public String crawlNews(@RequestParam String url) {
+    public String crawlNews(@RequestParam("url") String url) {
         try {
             crawlerService.fetchAndSaveNewsData(url);
             return "News data has been crawled and saved successfully.";
@@ -34,12 +34,12 @@ public class CrawlerController {
     }
 
     @GetMapping("/api/news")
-    public List<News> getAllNews(@RequestParam int numberOfData) {
+    public List<News> getAllNews(@RequestParam("numberOfData") int numberOfData) {
         return crawlerService.getAllEntities(numberOfData);
     }
 
     @GetMapping("/api/crawl-product")
-    public String crawlProduct(@RequestParam String query) {
+    public String crawlProduct(@RequestParam("query") String query) {
         Random random = new Random();
         int index = random.nextInt(41);
         try {
