@@ -1,5 +1,7 @@
 package comgb.comgabi.danawa_crawler.service;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,12 +34,15 @@ public class ProductService {
         }
     }
 
-    public List<Product> productCombined(String query, int index) {
+    private List<Product> productCombined(String query, int index) {
         List<Product> productList = new ArrayList<>();
+
+        String encodedQuery = URLEncoder.encode(query, StandardCharsets.UTF_8);
+        String url = "https://search.danawa.com/dsearch.php?k1=" + encodedQuery;
     
         // fluidProductInformationCrawler로 크롤링된 정보를 가져오기
-        List<List<String>> fluidList = subcutaneousObject.fluidProductInformationCrawler(query);
-        
+        List<List<String>> fluidList = subcutaneousObject.fluidProductInformationCrawler(url);
+
         // 각각의 리스트를 분리
         List<String> priceList = fluidList.get(0);          // 가격
         List<String> sellerList = fluidList.get(1);         // 판매자
@@ -45,7 +50,7 @@ public class ProductService {
         List<String> shoppingCostList = fluidList.get(3);   // 배송비
     
         // fixedProductInformation으로 크롤링된 정보를 가져오기
-        List<String> fixedInfoList = subcutaneousObject.fixedProductInformation(query);
+        List<String> fixedInfoList = subcutaneousObject.fixedProductInformation(url);
         String manufacturer = fixedInfoList.get(0);        // 제조사
         String category = fixedInfoList.get(1);            // 카테고리
         String model = fixedInfoList.get(2);               // 모델명

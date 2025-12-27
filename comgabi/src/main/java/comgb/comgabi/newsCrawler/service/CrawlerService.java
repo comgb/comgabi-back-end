@@ -13,7 +13,10 @@ import comgb.comgabi.newsCrawler.repository.NewsRepository;
 import jakarta.transaction.Transactional;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
+import java.net.URLConnection;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -28,46 +31,34 @@ public class CrawlerService {
     @Autowired
     private NewsRepository newsRepository;
 
-    public void fetchAndSaveNewsData(String url) throws IOException {
-        // 배열 데이터 가져오기
-        String[] titleArray;
-        Date[] dateArray;
-        String[] publisherArray;
-        String[] urlArray;
-
+    public void fetchAndSaveNewsData(String url) {
         try {
             URL feedUrl = new URL(url);
-            XmlReader reader = new XmlReader(feedUrl);
-            SyndFeed feed = new SyndFeedInput().build(reader);
-            List<SyndEntry> entries = feed.getEntries();
+            SyndFeed feed = new SyndFeedInput().build(new XmlReader(feedUrl));
 
-            // 배열 초기화
-            titleArray = new String[entries.size()];
-            dateArray = new Date[entries.size()];
-            publisherArray = new String[entries.size()];
-            urlArray = new String[entries.size()];
+            System.out.println("entries size = " + feed.getEntries().size());
+            System.out.println(feed.getFeedType());
+            System.out.println(feed.getTitle());
 
-            // 데이터 채우기
-            int index = 0;
-            for (SyndEntry entry : entries) {
-                titleArray[index] = entry.getTitle();
-                if (titleArray[index].contains(" -")) {
-                    titleArray[index] = titleArray[index].substring(0, titleArray[index].indexOf(" -"));
+            URL urlObj = new URL(url);
+            URLConnection conn = urlObj.openConnection();
+            conn.setRequestProperty("User-Agent", "Mozilla/5.0");
+
+            for (SyndEntry entry : feed.getEntries()) {
+                String title = entry.getTitle();
+                if (title != null && title.contains(" -")) {
+                    title = title.substring(0, title.indexOf(" -"));
                 }
-                dateArray[index] = entry.getPublishedDate();
-                publisherArray[index] = entry.getSource() != null ? entry.getSource().getTitle() : "Unknown";
-                urlArray[index] = entry.getLink();
-                index++;
-            }
 
-            // 배열 데이터를 반복문을 통해 개별적으로 DB에 저장
-            for (int i = 0; i < titleArray.length; i++) {
-                News news = new News(titleArray[i], dateArray[i], publisherArray[i], urlArray[i]);
+                Date publishedDate = entry.getPublishedDate();
+                String publisher = entry.getSource() != null ? entry.getSource().getTitle() : null;
+                String link = entry.getLink();
+
+                News news = new News(title, publishedDate, publisher, link);
                 newsRepository.save(news);
             }
-
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException("Failed to fetch RSS", e);
         }
     }
 
@@ -91,11 +82,17 @@ public class CrawlerService {
                     return false; // createdDate가 null이면 제외
                 })
                 .collect(Collectors.toList());
+        if (newsList.size() < numberOfData) {
+            numberOfData = newsList.size();
+        }
+        else if (newsList.size() == 0) {
+            return newsList;
+        }
         List<News> newNewsList = new ArrayList<>();
         ArrayList<Integer> excludingList = new ArrayList<>();
-        for(int i = 0; i < numberOfData; i++) {
+        for (int i = 0; i < numberOfData; i++) {
             News news = newsList.get(random.nextInt(newsList.size() + 1));
-            if(excludingList.contains(news.getNewsId())) {
+            if (excludingList.contains(news.getNewsId())) {
                 i -= 1;
                 continue;
             } else {

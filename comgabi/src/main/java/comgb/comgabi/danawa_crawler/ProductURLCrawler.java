@@ -31,8 +31,7 @@ public class ProductURLCrawler {
             }
             return urlList;
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Failed to crawling", e);
         }
-        return null;
     }
 }

@@ -2,35 +2,13 @@
     "configurations": [
         {
             "type": "java",
-            "name": "SubcutaneousObject",
-            "request": "launch",
-            "mainClass": "comgb.comgabi.danawa_crawler.SubcutaneousObject",
-            "projectName": "comgabi"
-        },
-        {
-            "type": "java",
-            "name": "ProductURLCrawler",
-            "request": "launch",
-            "mainClass": "comgb.comgabi.danawa_crawler.ProductURLCrawler",
-            "projectName": "comgabi"
-        },
-        {
-            "type": "java",
-            "name": "CrawlerService",
-            "request": "launch",
-            "mainClass": "comgb.comgabi.crawler.service.CrawlerService",
-            "projectName": "comgabi"
-        },
-        {
-            "type": "java",
             "name": "Spring Boot-ComgabiApplication<comgabi>",
             "request": "launch",
             "cwd": "${workspaceFolder}",
             "mainClass": "comgb.comgabi.ComgabiApplication",
             "projectName": "comgabi",
             "args": "",
-            "envFile": "${workspaceFolder}/.env",
-            "vmArgs": " -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=53272 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dspring.jmx.enabled=true -Djava.rmi.server.hostname=localhost -Dspring.application.admin.enabled=true -Dspring.boot.project.name=comgabi"
+            "envFile": "${workspaceFolder}/.env"
         }
     ]
 }
